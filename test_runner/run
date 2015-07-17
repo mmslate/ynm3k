@@ -113,7 +113,7 @@ if options.device then
       raise "Couldn't get the UDID using ioreg"
     end
   else
-    raise "Invalid UDID with length #{options.device.length} provided"
+    #raise "Invalid UDID with length #{options.device.length} provided"
   end
 end
 
@@ -132,7 +132,7 @@ if app_bundle == app_name then
   mdargs = 'kMDItemDisplayName == "' + app_name + '.app" || ' +
     'kMDItemAlternateNames == "' + app_name + '.app"'
   bundle_paths = `mdfind -0 '#{mdargs}' | xargs -0 ls -dt`.split(/\n/)
-  if options.device
+  if options.device.length == 40
     bundles = bundle_paths.grep(/\/(Debug|Release)-iphoneos\//)
   else
     bundles = bundle_paths.grep(/\/iPhone Simulator\/|\/(Debug|Release)-iphonesimulator\//)
@@ -179,7 +179,8 @@ end
 SDKROOT = `/usr/bin/xcodebuild -version -sdk iphoneos | grep PlatformPath`.split(":")[1].chomp.sub(/^\s+/, "")
 XCODE_ROOT = `/usr/bin/xcode-select -print-path`.chomp.sub(/^\s+/, "")
 
-TEMPLATE = `[ -f /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Instruments/PlugIns/AutomationInstrument.bundle/Contents/Resources/Automation.tracetemplate ] && echo "#{SDKROOT}/Developer/Library/Instruments/PlugIns/AutomationInstrument.bundle/Contents/Resources/Automation.tracetemplate" || echo "#{XCODE_ROOT}/../Applications/Instruments.app/Contents/PlugIns/AutomationInstrument.bundle/Contents/Resources/Automation.tracetemplate"`.chomp.sub(/^\s+/, "")
+#TEMPLATE = `[ -f /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Instruments/PlugIns/AutomationInstrument.bundle/Contents/Resources/Automation.tracetemplate ] && echo "#{SDKROOT}/Developer/Library/Instruments/PlugIns/AutomationInstrument.bundle/Contents/Resources/Automation.tracetemplate" || echo "#{XCODE_ROOT}/../Applications/Instruments.app/Contents/PlugIns/AutomationInstrument.bundle/Contents/Resources/Automation.tracetemplate"`.chomp.sub(/^\s+/, "")
+TEMPLATE = "/Applications/Xcode.app/Contents/Applications/Instruments.app/Contents/PlugIns/AutomationInstrument.xrplugin/Contents/Resources/Automation.tracetemplate"
 
 command = ["/usr/bin/instruments"]
 command << "-w" << options.device if options.device
