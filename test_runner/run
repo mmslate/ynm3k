@@ -285,7 +285,9 @@ end
 if failed || failed?(statistics)
   STDOUT.puts format_statistics(statistics)
   STDOUT.puts "#{test_script} failed, see log output for details"
-  exit 1
+  if failed
+    exit 1
+  end
 else
   STDOUT.puts format_statistics(statistics)
   STDOUT.puts "TEST PASSED"
