@@ -7,6 +7,13 @@ DYUI.namespace("tool");
 
 DYUI.tool.TestCase = function(template) {
 
+    /**
+     * The name of the test case.
+     * @type String
+     * @property name
+     */
+    this.name /*:String*/ = "";
+
     this._should /*:Object*/ = {};
 
     for (var prop in template) {
@@ -585,13 +592,16 @@ DYUI.tool.TestRunner = (function() {
         
             //calculate duration
             var duration = (new Date()) - node._start;
+
+            // remove prefix "test"
+            var resultName = testName.replace("test", "");
             
             //update results
             node.parent.results[testName] = { 
                 result: failed ? "fail" : "pass",
                 message: error ? error: "Test passed",
                 type: "test",
-                name: testName,
+                name: resultName,
                 duration: duration
             };
             
@@ -633,7 +643,7 @@ DYUI.tool.TestRunner = (function() {
             
             //figure out if the test should be ignored or not
             if (shouldIgnore){
-            
+
                 //update results
                 node.parent.results[testName] = { 
                     result: "ignore",
@@ -816,7 +826,7 @@ DYUI.tool.TestFormat.JUnitXML = function(results) {
                 break;
                 
             case "report":
-            
+
                 xml = "<testsuites>";
             
                 for (prop in results) {
