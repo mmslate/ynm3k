@@ -711,7 +711,8 @@ DYUI.tool.TestRunner = (function() {
          * @method add
          * @static
          */
-        add : function (testObject /*:Object*/) /*:Void*/ {
+        add : function (testObject /*:Object*/, name /*:String*/) /*:Void*/ {
+            testObject.name = name;
             this.masterSuite.add(testObject);
         },
 
