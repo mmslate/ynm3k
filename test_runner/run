@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -wKU
+#!/usr/bin/env ruby -wU
 
 require "fileutils"
 require "optparse"
@@ -102,7 +102,7 @@ end
 # Dynamic UDID
 # Discussion: better to have a separate command line option for dynamic?
 if options.device then
-  if options.device.length == 40
+  if options.device.length > 36
     # UDID provided
   elsif options.device == "dynamic"
     ioreg_output = `ioreg -w 0 -rc IOUSBDevice -k SupportsIPhoneOS`
