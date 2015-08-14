@@ -97,7 +97,7 @@ var Assert = {
     
     isTrue : function (actual, message) {
         if (true !== actual) {
-            throw Assert._getComparisonFailureMessage(Assert._formatMessage(message, "Value should be false."), true, actual);
+            throw Assert._getComparisonFailureMessage(Assert._formatMessage(message, "Value should be true."), true, actual);
         }
     },
     isNaN : function (actual, message){
