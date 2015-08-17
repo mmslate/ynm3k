@@ -225,6 +225,8 @@ def format_statistics(statistics)
   output
 end
 
+STDOUT.puts command
+
 statistics = {}
 failed = false
 
@@ -235,6 +237,8 @@ begin
       while not failed do
         if IO.select([r], nil, nil, options.timeout) then
           line = r.readline.rstrip
+
+          STDOUT.puts line
 
           _, date, time, tz, status, msg = line.match(/^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4}) ([^:]+): (.*)$/).to_a
 
