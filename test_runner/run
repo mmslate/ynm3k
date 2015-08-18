@@ -238,8 +238,6 @@ begin
         if IO.select([r], nil, nil, options.timeout) then
           line = r.readline.rstrip
 
-          STDOUT.puts line
-
           _, date, time, tz, status, msg = line.match(/^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4}) ([^:]+): (.*)$/).to_a
 
           if status
@@ -252,6 +250,8 @@ begin
           else
             outputs.each { |output| output.add(line) } if options.verbose
           end
+
+          STDOUT.puts line
 
           failed = true if line =~ /Instruments Trace Error/i
         else
